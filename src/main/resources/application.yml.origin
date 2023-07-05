@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name:
+    url: jdbc:
+    username:
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect:
+        show_sql:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled:
