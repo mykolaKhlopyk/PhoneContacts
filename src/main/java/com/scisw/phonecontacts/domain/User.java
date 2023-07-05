@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
+@Table(name = "users")
 @Data
 public class User {
     @Id
@@ -19,6 +20,6 @@ public class User {
     @NotBlank
     @Column(name = "password")
     private String password;
-    @OneToMany(mappedBy = "owner")
-    private List<Contact> contacts;
+//    @OneToMany(mappedBy = "owner")
+//    private List<Contact> contacts;
 }

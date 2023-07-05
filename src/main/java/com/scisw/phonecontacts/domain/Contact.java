@@ -9,6 +9,7 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "contacts")
 @Data
 public class Contact {
     @Id

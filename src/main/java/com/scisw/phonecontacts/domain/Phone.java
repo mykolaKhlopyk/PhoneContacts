@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
+@Table(name = "phones")
 @Data
 public class Phone {
     @Id
