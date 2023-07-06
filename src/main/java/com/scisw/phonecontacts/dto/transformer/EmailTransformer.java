@@ -1,7 +1,6 @@
-package com.scisw.phonecontacts.dto.transformers;
+package com.scisw.phonecontacts.dto.transformer;
 
 import com.scisw.phonecontacts.domain.Email;
-import com.scisw.phonecontacts.domain.Phone;
 import com.scisw.phonecontacts.dto.EmailDto;
 
 public class EmailTransformer {

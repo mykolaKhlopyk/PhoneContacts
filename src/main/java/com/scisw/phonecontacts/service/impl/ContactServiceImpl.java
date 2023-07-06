@@ -1,10 +1,8 @@
 package com.scisw.phonecontacts.service.impl;
 
 import com.scisw.phonecontacts.domain.Contact;
-import com.scisw.phonecontacts.domain.Email;
-import com.scisw.phonecontacts.domain.Phone;
 import com.scisw.phonecontacts.dto.ContactDto;
-import com.scisw.phonecontacts.dto.transformers.ContactTransformer;
+import com.scisw.phonecontacts.dto.transformer.ContactTransformer;
 import com.scisw.phonecontacts.repository.ContactRepository;
 import com.scisw.phonecontacts.repository.EmailRepository;
 import com.scisw.phonecontacts.repository.PhoneRepository;
@@ -12,7 +10,6 @@ import com.scisw.phonecontacts.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

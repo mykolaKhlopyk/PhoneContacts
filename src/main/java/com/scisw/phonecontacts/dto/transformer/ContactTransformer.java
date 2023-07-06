@@ -1,4 +1,4 @@
-package com.scisw.phonecontacts.dto.transformers;
+package com.scisw.phonecontacts.dto.transformer;
 
 import com.scisw.phonecontacts.domain.Contact;
 import com.scisw.phonecontacts.dto.ContactDto;
