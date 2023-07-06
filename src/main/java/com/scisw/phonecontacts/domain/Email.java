@@ -3,7 +3,7 @@ package com.scisw.phonecontacts.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "emails")
@@ -19,5 +19,5 @@ public class Email {
     private String emailAddress;
 
     @ManyToMany(mappedBy = "emails")
-    private List<Contact> contacts;
+    private Set<Contact> contacts;
 }

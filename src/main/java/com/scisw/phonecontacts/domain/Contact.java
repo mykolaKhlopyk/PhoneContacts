@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -31,7 +32,7 @@ public class Contact {
             joinColumns = @JoinColumn(name = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "email_id")
     )
-    private List<Email> emails;
+    private Set<Email> emails;
 
     @ManyToMany
     @JoinTable(
@@ -39,5 +40,5 @@ public class Contact {
             joinColumns = @JoinColumn(name = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "phone_id")
     )
-    private List<Phone> phones;
+    private Set<Phone> phones;
 }

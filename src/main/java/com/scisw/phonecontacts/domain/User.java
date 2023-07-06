@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +20,6 @@ public class User {
     @NotBlank
     @Column(name = "password")
     private String password;
-//    @OneToMany(mappedBy = "owner")
-//    private List<Contact> contacts;
+    @OneToMany(mappedBy = "owner")
+    private Set<Contact> contacts;
 }
