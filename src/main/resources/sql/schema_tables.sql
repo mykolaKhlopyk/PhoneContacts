@@ -34,6 +34,6 @@ CREATE TABLE contacts_emails
 CREATE TABLE contacts_phones
 (
     contact_id       BIGINT REFERENCES contacts (id),
-    phone_numbers_id BIGINT REFERENCES phones (id),
-    PRIMARY KEY (contact_id, phone_numbers_id)
+    phone_id BIGINT REFERENCES phones (id),
+    PRIMARY KEY (contact_id, phone_id)
 );
