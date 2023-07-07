@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,5 +18,5 @@ public class Phone {
     @NotBlank
     private String phoneNumber;
     @ManyToMany(mappedBy = "phones")
-    private Set<Contact> contacts;
+    private List<Contact> contacts;
 }

@@ -17,8 +17,8 @@ public class ContactTransformer {
     public static Contact convertToEntity(ContactDto contactDto){
         Contact contact = new Contact();
         contact.setName(contactDto.getName());
-        contact.setEmails(contactDto.getEmails().stream().map(EmailTransformer::convertToEntity).collect(Collectors.toSet()));
-        contact.setPhones(contactDto.getPhones().stream().map(PhoneTransformer::convertToEntity).collect(Collectors.toSet()));
+        contact.setEmails(contactDto.getEmails().stream().map(EmailTransformer::convertToEntity).collect(Collectors.toList()));
+        contact.setPhones(contactDto.getPhones().stream().map(PhoneTransformer::convertToEntity).collect(Collectors.toList()));
         return contact;
     }
 }

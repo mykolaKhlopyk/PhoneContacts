@@ -6,13 +6,14 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "contacts")
 @Data
-public class Contact {
+public class Contact{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,19 +27,28 @@ public class Contact {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User owner;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="contacts_emails",
             joinColumns = @JoinColumn(name = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "email_id")
     )
-    private Set<Email> emails;
+    private List<Email> emails;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="contacts_phones",
             joinColumns = @JoinColumn(name = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "phone_id")
     )
-    private Set<Phone> phones;
+    private List<Phone> phones;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return Objects.equals(name, contact.name);
+    }
+
 }
