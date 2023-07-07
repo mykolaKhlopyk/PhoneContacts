@@ -1,5 +1,6 @@
 package com.scisw.phonecontacts.repository;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import com.scisw.phonecontacts.domain.User;
@@ -10,10 +11,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
+@RequiredArgsConstructor
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class UserRepositoryTest {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     @Test
     @Order(1)
     public void UserRepositorySaveAndReturn(){
