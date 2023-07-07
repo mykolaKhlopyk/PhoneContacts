@@ -1,7 +1,6 @@
 package com.scisw.phonecontacts.repository;
 
 
-import com.scisw.phonecontacts.domain.Email;
 import com.scisw.phonecontacts.domain.Phone;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
