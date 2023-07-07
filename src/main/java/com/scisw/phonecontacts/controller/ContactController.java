@@ -29,14 +29,14 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<ContactDto> update(@Valid @RequestBody ContactDto contactDto){
-        return new ResponseEntity<ContactDto>(contactService.update(contactDto), HttpStatus.OK);
+    public ResponseEntity<ContactDto> update(@RequestBody ContactDto contactDto){
+        return new ResponseEntity<>(contactService.update(contactDto), HttpStatus.OK);
 
     }
 
     @DeleteMapping
     public ResponseEntity<ContactDto> delete(@PathVariable String name){
-        return new ResponseEntity<ContactDto>(contactService.deleteContact(name), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(contactService.deleteContact(name), HttpStatus.NO_CONTENT);
     }
 
 }

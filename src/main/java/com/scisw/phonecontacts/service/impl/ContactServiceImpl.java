@@ -6,11 +6,15 @@ import com.scisw.phonecontacts.domain.Phone;
 import com.scisw.phonecontacts.domain.User;
 import com.scisw.phonecontacts.dto.ContactDto;
 import com.scisw.phonecontacts.dto.transformer.ContactTransformer;
+import com.scisw.phonecontacts.exceptions.ContactNotExistException;
+import com.scisw.phonecontacts.exceptions.IncorrectEmailOrPhoneException;
 import com.scisw.phonecontacts.repository.ContactRepository;
 import com.scisw.phonecontacts.repository.EmailRepository;
 import com.scisw.phonecontacts.repository.PhoneRepository;
 import com.scisw.phonecontacts.repository.UserRepository;
 import com.scisw.phonecontacts.service.ContactService;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +37,8 @@ public class ContactServiceImpl implements ContactService {
     private final PhoneRepository phoneRepository;
     private final UserRepository userRepository;
 
+    private final Validator validator;
+
     @Override
     @Transactional
     public ContactDto createContact(ContactDto contactDto) {
@@ -52,8 +58,20 @@ public class ContactServiceImpl implements ContactService {
     @Override
     @Transactional
     public ContactDto update(ContactDto contactDto) {
+        Set<ConstraintViolation<ContactDto>> violations = validator.validate(contactDto);
+
+        if (!violations.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (ConstraintViolation<ContactDto> constraintViolation : violations) {
+                sb.append(constraintViolation.getMessage());
+                if (!constraintViolation.getMessage().equals("Contact name already exist"))
+                    throw new IncorrectEmailOrPhoneException("Error occurred: " + sb.toString());
+            }
+        } else {
+            throw new ContactNotExistException();
+        }
         Contact contact = ContactTransformer.convertToEntity(contactDto);
-        Contact oldContact = contactRepository.findContactByName(contact.getName()).orElseThrow(RuntimeException::new);
+        Contact oldContact = contactRepository.findContactByName(contact.getName()).get();
         removeRelationsWithContacts(contact);
         saveEmailsAndPhones(contact);
         return ContactTransformer.convertToDto(oldContact);
@@ -73,7 +91,7 @@ public class ContactServiceImpl implements ContactService {
         return userRepository.findByLogin(user.getLogin()).get();
     }
 
-    private void saveEmailsAndPhones(Contact contact){
+    private void saveEmailsAndPhones(Contact contact) {
         contact.setEmails(contact.getEmails().stream()
                 .map(email -> emailRepository.findByEmailAddress(email.getEmailAddress()).orElseGet(() -> emailRepository.save(email)))
                 .collect(Collectors.toList()));
@@ -82,13 +100,13 @@ public class ContactServiceImpl implements ContactService {
                 .collect(Collectors.toList()));
     }
 
-    private void removeRelationsWithContacts(Contact contact){
-        for (Email email: contact.getEmails()) {
+    private void removeRelationsWithContacts(Contact contact) {
+        for (Email email : contact.getEmails()) {
             email.getContacts().remove(contact);
             if (email.getContacts().isEmpty())
                 emailRepository.delete(email);
         }
-        for(Phone phone: contact.getPhones()){
+        for (Phone phone : contact.getPhones()) {
             phone.getContacts().remove(contact);
             if (phone.getContacts().isEmpty())
                 phoneRepository.delete(phone);
